@@ -1,0 +1,18 @@
+
+Todos os funcionários da empresa teram contas e usuários, cada funcionário pode ter mais de um papel(Roles), a primeira mais as secundárias:
+	- Garçom
+	- Atendente (só fica no caixa encerrando pedidos )
+	- Gerente
+	- Cozinheiro
+
+	Ex. Sou um garçom, mas quando está corrido na cozinha posso preparar algo.
+
+Cada role vai disponibilizar um microserviço para esse usuário.
+
+Garçom, pega Pedido que tem a informação da Mesa, Detalhe do Pedido que possui todos os produtos que foram escolhidos pelo cliente, e Produtos é a tabela do cardápio, com todos produtos disponíveis.
+
+Ao pegar o pedido pelo Aplicativo o garçom escolhe os produtos e finaliza, enviando para Preparo (na cozinha).
+
+Pedidos concluidos temporariamente são enviados para o Caixa, somente Atendente e Gerente podem encerrar um pedido, é o único papel da Atendente do Caixa.
+
+Não sei como seria o Vínculo da Atendente e do Gerente com o Caixa, e após o Status do caixa for alterado, por exemplo pra inativo, o caixa é encerrado e salvo as informações em outra tabela, não sei que nome ainda.
