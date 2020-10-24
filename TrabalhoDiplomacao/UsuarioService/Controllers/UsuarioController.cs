@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using UsuarioService.Database;
+using UsuarioService.Database.Entities;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -12,31 +15,38 @@ namespace UsuarioService.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<string> Get()
+        ApplicationDbContext db;
+
+        public UsuarioController()
         {
-            return new string[] { "value1", "value2" };
+            db = new ApplicationDbContext();
+        }
+
+        [HttpGet]
+        public IEnumerable<Usuario> Get()
+        {
+            return db.Usuarios.ToList();
         }
 
         [HttpGet("{id}")]
-        public string Get(int id)
+        public Usuario Get(int id)
         {
-            return "value";
+            return db.Usuarios.Find(id);
         }
 
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Usuario model)
         {
-        }
-
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            try
+            {
+                db.Usuarios.Add(model);
+                db.SaveChanges();
+                return StatusCode(StatusCodes.Status201Created, model);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex);
+            }
         }
     }
 }
