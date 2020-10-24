@@ -15,9 +15,9 @@ namespace UsuarioService.Database.Entities
         public string Email { get; set; }
         public string Telefone { get; set; }
         public bool Proprietario { get; set; }
+        public bool Status { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }     
-        public bool Status { get; set; }
         public DateTime DataRegistro { get; set; }
     }
 }
