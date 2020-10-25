@@ -22,6 +22,9 @@ namespace UsuarioService.Database.Entities
         public bool Proprietario { get; set; }
         public bool Status { get; set; }
         [Required]
+        public string Role { get; set; }
+        public string Token { get; set; }
+        [Required]
         public string Username { get; set; }
         [Required]
         public string Password { get; set; }

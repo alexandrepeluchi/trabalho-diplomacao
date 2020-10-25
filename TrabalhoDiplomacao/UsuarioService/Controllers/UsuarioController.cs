@@ -2,38 +2,60 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using UsuarioService.Database;
 using UsuarioService.Database.Entities;
+using UsuarioService.Models;
+using UsuarioService.Services;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace UsuarioService.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
         ApplicationDbContext db;
+        private IUsuarioManager _usuarioManager;
 
-        public UsuarioController()
-        {
+        public UsuarioController(IUsuarioManager usuarioManager)
+        { 
             db = new ApplicationDbContext();
+            _usuarioManager = usuarioManager;
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet]
-        public IEnumerable<Usuario> Get()
+        public IActionResult GetAll()
         {
-            return db.Usuarios.ToList();
+            var usuarios = _usuarioManager.GetAll();
+            return Ok(usuarios);
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("{id}")]
         public Usuario Get(int id)
         {
             return db.Usuarios.Find(id);
         }
 
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody] AuthenticateModel model)
+        {
+            var user = _usuarioManager.Authenticate(model.Username, model.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Username or password is incorrect" });
+
+            return Ok(user);
+        }
+
+        [Authorize(Roles = Role.Admin)]
         [HttpPost]
         public IActionResult Post([FromBody] Usuario model)
         {
