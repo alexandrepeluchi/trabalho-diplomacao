@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace UsuarioService.Database.Entities
 {
-    public static class Role
+    public class Role
     {
-        public const string Admin = "Admin";
-        public const string User = "User";
+        [Key]
+        [Required(AllowEmptyStrings = false)]
+        [MaxLength(450)]
+        public string RoleName { get; private set; }
+
+        [Required(AllowEmptyStrings = false)]
+        public string Description { get; private set; }
     }
 }

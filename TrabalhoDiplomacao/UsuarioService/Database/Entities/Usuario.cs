@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,8 +22,9 @@ namespace UsuarioService.Database.Entities
         public string Telefone { get; set; }
         public bool Proprietario { get; set; }
         public bool Status { get; set; }
-        [Required]
-        public string Role { get; set; }
+        public Role Role { get; set; }
+        public long RoleId { get; set; }
+        [ForeignKey("RoleId")]
         public string Token { get; set; }
         [Required]
         public string Username { get; set; }

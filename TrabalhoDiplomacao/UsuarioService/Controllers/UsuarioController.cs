@@ -28,7 +28,7 @@ namespace UsuarioService.Controllers
             _usuarioManager = usuarioManager;
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -36,7 +36,7 @@ namespace UsuarioService.Controllers
             return Ok(usuarios);
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet("{id}")]
         public Usuario Get(int id)
         {
@@ -55,7 +55,7 @@ namespace UsuarioService.Controllers
             return Ok(user);
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public IActionResult Post([FromBody] Usuario model)
         {

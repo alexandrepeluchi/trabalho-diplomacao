@@ -14,6 +14,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using UsuarioService.Helpers;
 using UsuarioService.Services;
+using UsuarioService.Uteis;
 
 namespace UsuarioService
 {
@@ -59,6 +60,7 @@ namespace UsuarioService
 
             // configure DI for application services
             services.AddScoped<IUsuarioManager, UsuarioManager>();
+            services.AddScoped<IUsuarioServico, UsuarioServico>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

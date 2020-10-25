@@ -9,7 +9,7 @@ namespace UsuarioService.Services
     public interface IUsuarioManager
     {
         Usuario Authenticate(string username, string password);
+        Usuario BuscaPorId(int id);
         IEnumerable<Usuario> GetAll();
-        Usuario GetById(int id);
     }
 }
