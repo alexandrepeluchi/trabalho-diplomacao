@@ -31,21 +31,23 @@ namespace UsuarioService.Services
 
         public Usuario Authenticate(string username, string password)
         {
-            var user = _usuarioServico.BuscaTodos().SingleOrDefault(x => x.Username == username && x.Password == password);
+            var user = _usuarioServico.BuscaTodos()
+                                                .Include(x => x.Role)
+                                                .SingleOrDefault(x => x.Username == username && x.Password == password);     
 
-            // return null if user not found
+            // Returno null se o usuário não foi encontrado
             if (user == null)
                 return null;
 
-            // authentication successful so generate jwt token
+            // Autenticação bem-sucedida, então gera Token JWT
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Segredo);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.UsuarioId.ToString()),
-                    new Claim(ClaimTypes.Role, user.Role.RoleName)
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, user.Role.RoleName.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
@@ -63,7 +65,7 @@ namespace UsuarioService.Services
 
         public Usuario BuscaPorId(int id)
         {
-            var user = _usuarioServico.BuscaTodos().FirstOrDefault(x => x.UsuarioId == id);
+            var user = _usuarioServico.BuscaTodos().FirstOrDefault(x => x.Id == id);
             return user.WithoutPassword();
         }
     }
