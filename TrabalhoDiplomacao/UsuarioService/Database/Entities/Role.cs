@@ -8,7 +8,8 @@ namespace UsuarioService.Database.Entities
 {
     public class Role
     {
-        [Key]
+        public long Id { get; set; }
+
         [Required(AllowEmptyStrings = false)]
         [MaxLength(450)]
         public string RoleName { get; private set; }

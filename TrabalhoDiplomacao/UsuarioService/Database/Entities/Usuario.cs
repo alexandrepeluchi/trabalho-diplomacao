@@ -9,7 +9,7 @@ namespace UsuarioService.Database.Entities
 {
     public class Usuario
     {
-        public int UsuarioId { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Nome { get; set; }
         [Required]
@@ -21,10 +21,10 @@ namespace UsuarioService.Database.Entities
         [Required]
         public string Telefone { get; set; }
         public bool Proprietario { get; set; }
-        public bool Status { get; set; }
-        public Role Role { get; set; }
+        public bool Status { get; set; }  
         public long RoleId { get; set; }
         [ForeignKey("RoleId")]
+        public Role Role { get; set; }
         public string Token { get; set; }
         [Required]
         public string Username { get; set; }
