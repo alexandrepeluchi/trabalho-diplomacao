@@ -50,7 +50,7 @@ namespace UsuarioService.Controllers
             var user = _usuarioManager.Authenticate(model.Username, model.Password);
 
             if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest(new { message = "Usuário ou Senha incorreto!" });
 
             return Ok(user);
         }
