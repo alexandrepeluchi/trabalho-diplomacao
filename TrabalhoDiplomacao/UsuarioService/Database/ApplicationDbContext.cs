@@ -9,8 +9,8 @@ namespace UsuarioService.Database
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Role> Role { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
