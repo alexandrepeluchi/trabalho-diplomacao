@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace UsuarioService.Database.Entities
 {
+    [Table("Usuario")]
     public class Usuario
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         [Required]
         public string Nome { get; set; }
         [Required]
