@@ -40,7 +40,7 @@ namespace UsuarioService.Controllers
         [HttpGet("{id}")]
         public Usuario Get(int id)
         {
-            return db.Usuarios.Find(id);
+            return db.Usuario.Find(id);
         }
 
         [AllowAnonymous]
@@ -61,7 +61,7 @@ namespace UsuarioService.Controllers
         {
             try
             {
-                db.Usuarios.Add(model);
+                db.Usuario.Add(model);
                 db.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }
