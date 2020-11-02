@@ -7,23 +7,21 @@ using System.Threading.Tasks;
 
 namespace UsuarioService.Database.Entities
 {
-    [Table("Usuario")]
+    [Table("Usuarios")]
     public class Usuario
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string Nome { get; set; }
         [Required]
         public string Sobrenome { get; set; }
-        [Required]
         public string CPF { get; set; }
         public string RG { get; set; }
         public string Email { get; set; }
-        [Required]
         public string Telefone { get; set; }
         public bool Proprietario { get; set; }
         public bool Status { get; set; }  
-        public long RoleId { get; set; }
+        public int RoleId { get; set; }
         [ForeignKey("RoleId")]
         public Role Role { get; set; }
         public string Token { get; set; }

@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PedidoService.Database.Entities;
+using UsuarioService.Database;
 
-namespace PedidoService.Migrations
+namespace UsuarioService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201102143509_CriacaoPedido")]
-    partial class CriacaoPedido
+    [Migration("20201102190212_AdicionandoRolesEAdmin")]
+    partial class AdicionandoRolesEAdmin
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,37 +21,11 @@ namespace PedidoService.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("PedidoService.Database.Entities.Pedido", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataPedido")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("UsuarioId")
-                        .HasColumnType("bigint");
-
-                    b.Property<float>("Valor")
-                        .HasColumnType("real");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId");
-
-                    b.ToTable("Pedido");
-                });
-
             modelBuilder.Entity("UsuarioService.Database.Entities.Role", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
@@ -65,18 +39,43 @@ namespace PedidoService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Administradores do sistema",
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Gerente do estabelecimento",
+                            RoleName = "Gerente"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Atendente do estabelecimento",
+                            RoleName = "Atendente"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Garçom do estabelecimento",
+                            RoleName = "Garçom"
+                        });
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Usuario", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CPF")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataRegistro")
@@ -99,8 +98,8 @@ namespace PedidoService.Migrations
                     b.Property<string>("RG")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
@@ -110,7 +109,6 @@ namespace PedidoService.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Token")
@@ -124,16 +122,21 @@ namespace PedidoService.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Usuario");
-                });
+                    b.ToTable("Usuarios");
 
-            modelBuilder.Entity("PedidoService.Database.Entities.Pedido", b =>
-                {
-                    b.HasOne("UsuarioService.Database.Entities.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DataRegistro = new DateTime(2020, 11, 2, 16, 2, 11, 818, DateTimeKind.Local).AddTicks(898),
+                            Nome = "Admin",
+                            Password = "admin",
+                            Proprietario = true,
+                            RoleId = 1,
+                            Sobrenome = "Admin",
+                            Status = true,
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Usuario", b =>

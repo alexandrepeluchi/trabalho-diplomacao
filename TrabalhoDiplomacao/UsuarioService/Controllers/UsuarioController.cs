@@ -23,7 +23,7 @@ namespace UsuarioService.Controllers
         private IUsuarioManager _usuarioManager;
 
         public UsuarioController(IUsuarioManager usuarioManager)
-        { 
+        {
             db = new ApplicationDbContext();
             _usuarioManager = usuarioManager;
         }
@@ -40,7 +40,7 @@ namespace UsuarioService.Controllers
         [HttpGet("{id}")]
         public Usuario Get(int id)
         {
-            return db.Usuario.Find(id);
+            return db.Usuarios.Find(id);
         }
 
         [AllowAnonymous]
@@ -61,7 +61,7 @@ namespace UsuarioService.Controllers
         {
             try
             {
-                db.Usuario.Add(model);
+                db.Usuarios.Add(model);
                 db.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }

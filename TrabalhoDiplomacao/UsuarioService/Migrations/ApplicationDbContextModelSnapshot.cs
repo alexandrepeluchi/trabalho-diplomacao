@@ -21,9 +21,9 @@ namespace UsuarioService.Migrations
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Role", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
@@ -38,6 +38,32 @@ namespace UsuarioService.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Administradores do sistema",
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Gerente do estabelecimento",
+                            RoleName = "Gerente"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Atendente do estabelecimento",
+                            RoleName = "Atendente"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Garçom do estabelecimento",
+                            RoleName = "Garçom"
+                        });
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Usuario", b =>
@@ -48,7 +74,6 @@ namespace UsuarioService.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CPF")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataRegistro")
@@ -71,8 +96,8 @@ namespace UsuarioService.Migrations
                     b.Property<string>("RG")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
@@ -82,7 +107,6 @@ namespace UsuarioService.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Token")
@@ -97,6 +121,20 @@ namespace UsuarioService.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DataRegistro = new DateTime(2020, 11, 2, 16, 2, 11, 818, DateTimeKind.Local).AddTicks(898),
+                            Nome = "Admin",
+                            Password = "admin",
+                            Proprietario = true,
+                            RoleId = 1,
+                            Sobrenome = "Admin",
+                            Status = true,
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Usuario", b =>

@@ -32,8 +32,8 @@ namespace PedidoService.Migrations
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<long>("UsuarioId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
 
                     b.Property<float>("Valor")
                         .HasColumnType("real");
@@ -42,14 +42,14 @@ namespace PedidoService.Migrations
 
                     b.HasIndex("UsuarioId");
 
-                    b.ToTable("Pedido");
+                    b.ToTable("Pedidos");
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Role", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
@@ -63,18 +63,43 @@ namespace PedidoService.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Administradores do sistema",
+                            RoleName = "Admin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Gerente do estabelecimento",
+                            RoleName = "Gerente"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Atendente do estabelecimento",
+                            RoleName = "Atendente"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Garçom do estabelecimento",
+                            RoleName = "Garçom"
+                        });
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Usuario", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
+                        .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CPF")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DataRegistro")
@@ -97,8 +122,8 @@ namespace PedidoService.Migrations
                     b.Property<string>("RG")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("RoleId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Sobrenome")
                         .IsRequired()
@@ -108,7 +133,6 @@ namespace PedidoService.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Telefone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Token")
@@ -122,7 +146,21 @@ namespace PedidoService.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Usuario");
+                    b.ToTable("Usuarios");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DataRegistro = new DateTime(2020, 11, 2, 16, 8, 57, 226, DateTimeKind.Local).AddTicks(8),
+                            Nome = "Admin",
+                            Password = "admin",
+                            Proprietario = true,
+                            RoleId = 1,
+                            Sobrenome = "Admin",
+                            Status = true,
+                            Username = "admin"
+                        });
                 });
 
             modelBuilder.Entity("PedidoService.Database.Entities.Pedido", b =>

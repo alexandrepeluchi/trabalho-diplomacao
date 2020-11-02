@@ -7,6 +7,10 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201102143403_CriacaoPedido.cs" />
     <Compile Remove="Migrations\20201102143403_CriacaoPedido.Designer.cs" />
+    <Compile Remove="Migrations\20201102185718_AdicionandoPedidoESuasRelacoes.cs" />
+    <Compile Remove="Migrations\20201102185718_AdicionandoPedidoESuasRelacoes.Designer.cs" />
+    <Compile Remove="Migrations\20201102190757_AdicionandoPedidoESuasRelacoes.cs" />
+    <Compile Remove="Migrations\20201102190757_AdicionandoPedidoESuasRelacoes.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

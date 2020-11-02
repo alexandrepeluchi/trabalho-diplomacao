@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace UsuarioService.Database.Entities
 {
-    [Table("Role")]
+    [Table("Roles")]
     public class Role
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [MaxLength(450)]
-        public string RoleName { get; private set; }
+        public string RoleName { get; set; }
 
         [Required(AllowEmptyStrings = false)]
-        public string Description { get; private set; }
+        public string Description { get; set; }
     }
 }

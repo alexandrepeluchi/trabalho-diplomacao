@@ -6,8 +6,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PedidoService.Database.Entities;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace PedidoService.Controllers
 {
     [Route("api/[controller]")]
@@ -23,7 +21,7 @@ namespace PedidoService.Controllers
         [HttpGet]
         public IEnumerable<Pedido> GetAll()
         {
-            return db.Pedido.ToList();
+            return db.Pedidos.ToList();
         }
 
         // GET api/<PedidoController>/5
@@ -39,7 +37,7 @@ namespace PedidoService.Controllers
         {
             try
             {
-                db.Pedido.Add(model);
+                db.Pedidos.Add(model);
                 db.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }
