@@ -7,9 +7,10 @@ using UsuarioService.Database.Entities;
 
 namespace PedidoService.Database.Entities
 {
+    [Table("Pedido")]
     public class Pedido
     {
-        public int Id { get; set; }
+        public long Id { get; set; }
         public float Valor { get; set; }
         public bool Status { get; set; }
         public DateTime DataPedido { get; set; }
