@@ -1,4 +1,5 @@
 ﻿using PedidoService.Database.Entities;
+using PedidoService.Services.Mesas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,13 @@ namespace PedidoService.Validacao
     public class PedidoValidador : IPedidoValidador
     {
         private IUsuarioManager _usuarioManager;
+        private IMesaManager _mesaManager;
 
-        public PedidoValidador(IUsuarioManager usuarioManager)
+        public PedidoValidador(IUsuarioManager usuarioManager,
+                               IMesaManager mesaManager)
         {
             _usuarioManager = usuarioManager;
+            _mesaManager = mesaManager;
         }
 
         public void ValidaRegrasDeNegocio(Pedido pedido)
@@ -29,6 +33,13 @@ namespace PedidoService.Validacao
             if (usuarioNoDb == null)
             {
                 throw new Exception("O Usuário não foi encontrado.");
+            }
+
+            var mesaNoDb = _mesaManager.BuscaPorId(pedido.MesaId);
+
+            if (mesaNoDb == null)
+            {
+                throw new Exception("A Mesa não foi encontrada.");
             }
         }
     }
