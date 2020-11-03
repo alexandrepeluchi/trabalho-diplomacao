@@ -17,5 +17,8 @@ namespace PedidoService.Database.Entities
         public int UsuarioId { get; set; }
         [ForeignKey("UsuarioId")]
         public Usuario Usuario { get; set; }
+        public int MesaId { get; set; }
+        [ForeignKey("MesaId")]
+        public Mesa Mesa { get; set; }
     }
 }

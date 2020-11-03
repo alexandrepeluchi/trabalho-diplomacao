@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PedidoService.Database.Entities;
 using PedidoService.Services;
+using PedidoService.Validacao;
 using UsuarioService.Database.Entities;
 
 namespace PedidoService.Controllers
@@ -17,11 +18,15 @@ namespace PedidoService.Controllers
     {
         ApplicationDbContext db;
         private IPedidoManager _pedidoManager;
+        private IPedidoValidador _pedidoValidador;
 
-        public PedidoController(IPedidoManager pedidoManager)
+        public PedidoController(IPedidoManager pedidoManager,
+                                IPedidoValidador pedidoValidador)
         {
             db = new ApplicationDbContext();
             _pedidoManager = pedidoManager;
+            _pedidoValidador = pedidoValidador;
+
         }
 
         [Authorize(Roles = Roles.Admin)]
@@ -47,6 +52,8 @@ namespace PedidoService.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Pedido model)
         {
+            _pedidoValidador.ValidaRegrasDeNegocio(model);
+
             try
             {
                 db.Pedidos.Add(model);
