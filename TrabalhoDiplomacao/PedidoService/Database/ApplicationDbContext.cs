@@ -5,13 +5,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using UsuarioService.Database.Entities;
 
-namespace UsuarioService.Database
+namespace PedidoService.Database.Entities
 {
     public class ApplicationDbContext : DbContext
     {
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Role> Roles { get; set; }
-
+        public DbSet<Pedido> Pedidos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=GW\\SQLEXPRESS; Database=TD; User ID=sa; Password=123qwe;");
@@ -20,7 +18,8 @@ namespace UsuarioService.Database
         protected override void OnModelCreating(ModelBuilder modelbuilder)
         {
             modelbuilder.Entity<Role>().HasData(
-                new Role { 
+                new Role
+                {
                     Id = 1,
                     RoleName = "Admin",
                     Description = "Administradores do sistema"

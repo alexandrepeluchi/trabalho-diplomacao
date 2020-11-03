@@ -23,9 +23,21 @@ namespace UsuarioService.Controllers
         private IUsuarioManager _usuarioManager;
 
         public UsuarioController(IUsuarioManager usuarioManager)
-        { 
+        {
             db = new ApplicationDbContext();
             _usuarioManager = usuarioManager;
+        }
+
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate([FromBody] AuthenticateModel model)
+        {
+            var user = _usuarioManager.Authenticate(model.Username, model.Password);
+
+            if (user == null)
+                return BadRequest(new { message = "Usuário ou Senha incorreto!" });
+
+            return Ok(user);
         }
 
         [Authorize(Roles = Roles.Admin)]
@@ -41,18 +53,6 @@ namespace UsuarioService.Controllers
         public Usuario Get(int id)
         {
             return db.Usuarios.Find(id);
-        }
-
-        [AllowAnonymous]
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate([FromBody] AuthenticateModel model)
-        {
-            var user = _usuarioManager.Authenticate(model.Username, model.Password);
-
-            if (user == null)
-                return BadRequest(new { message = "Usuário ou Senha incorreto!" });
-
-            return Ok(user);
         }
 
         [Authorize(Roles = Roles.Admin)]

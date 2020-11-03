@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using UsuarioService.Database;
+using PedidoService.Database.Entities;
 
-namespace UsuarioService.Migrations
+namespace PedidoService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -18,6 +18,32 @@ namespace UsuarioService.Migrations
                 .HasAnnotation("ProductVersion", "3.1.9")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("PedidoService.Database.Entities.Pedido", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("DataPedido")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.Property<float>("Valor")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Pedidos");
+                });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Role", b =>
                 {
@@ -126,7 +152,7 @@ namespace UsuarioService.Migrations
                         new
                         {
                             Id = 1,
-                            DataRegistro = new DateTime(2020, 11, 2, 16, 2, 11, 818, DateTimeKind.Local).AddTicks(898),
+                            DataRegistro = new DateTime(2020, 11, 2, 16, 8, 57, 226, DateTimeKind.Local).AddTicks(8),
                             Nome = "Admin",
                             Password = "admin",
                             Proprietario = true,
@@ -135,6 +161,15 @@ namespace UsuarioService.Migrations
                             Status = true,
                             Username = "admin"
                         });
+                });
+
+            modelBuilder.Entity("PedidoService.Database.Entities.Pedido", b =>
+                {
+                    b.HasOne("UsuarioService.Database.Entities.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("UsuarioService.Database.Entities.Usuario", b =>

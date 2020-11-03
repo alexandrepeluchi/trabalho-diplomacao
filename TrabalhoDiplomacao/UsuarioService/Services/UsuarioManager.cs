@@ -65,7 +65,7 @@ namespace UsuarioService.Services
 
         public Usuario BuscaPorId(int id)
         {
-            var user = _usuarioServico.BuscaTodos().FirstOrDefault(x => x.Id == id);
+            var user = GetAll().FirstOrDefault(x => x.Id == id);
             return user.WithoutPassword();
         }
     }
