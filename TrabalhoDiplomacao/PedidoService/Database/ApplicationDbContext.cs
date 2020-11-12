@@ -11,6 +11,8 @@ namespace PedidoService.Database.Entities
     {
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Mesa> Mesas { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<PedidoProduto> PedidosProdutos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
