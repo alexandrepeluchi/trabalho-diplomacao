@@ -20,6 +20,6 @@ namespace PedidoService.Database.Entities
         public int MesaId { get; set; }
         [ForeignKey("MesaId")]
         public Mesa Mesa { get; set; }
-        public ICollection<PedidoProduto> PedidosProdutos { get; set; }
+        public ICollection<PedidoProduto> PedidoProdutos { get; set; }
     }
 }

@@ -38,9 +38,9 @@ namespace PedidoService.Controllers
 
         [Authorize(Roles = Roles.Admin)]
         [HttpGet("{id}")]
-        public IActionResult Get(long id)
+        public IActionResult Get(int id)
         {
-            var pedido = db.Pedidos.Find(id);
+            var pedido = _pedidoManager.BuscaPorId(id);
 
             if (pedido == null)
                 return BadRequest(new { message = "Pedido não foi encontrado!" });

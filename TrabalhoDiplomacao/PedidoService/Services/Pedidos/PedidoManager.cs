@@ -23,7 +23,10 @@ namespace PedidoService.Services
 
         public Pedido BuscaPorId(int id)
         {
-            var pedido = BuscaTodos().FirstOrDefault(x => x.Id == id);
+            var pedido = _dbContext.Pedidos
+                                    .Where(x => x.Id == id)
+                                    .Include(x => x.PedidoProdutos)
+                                    .FirstOrDefault();
             return pedido;
         }
     }

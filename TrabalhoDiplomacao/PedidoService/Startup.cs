@@ -62,6 +62,11 @@ namespace PedidoService
                 };
             });
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             // configure DI for application services
             services.AddScoped<IPedidoManager, PedidoManager>();
             services.AddScoped<IPedidoValidador, PedidoValidador>();
