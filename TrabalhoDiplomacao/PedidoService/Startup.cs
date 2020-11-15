@@ -16,6 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PedidoService.Services;
 using PedidoService.Services.Mesas;
+using PedidoService.Services.Produtos;
 using PedidoService.Validacao;
 using UsuarioService.Helpers;
 using UsuarioService.Services;
@@ -76,6 +77,7 @@ namespace PedidoService
             services.AddScoped<IUsuarioManager, UsuarioManager>();
             services.AddScoped<IUsuarioServico, UsuarioServico>();
             services.AddScoped<IMesaManager, MesaManager>();
+            services.AddScoped<IProdutoManager, ProdutoManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
