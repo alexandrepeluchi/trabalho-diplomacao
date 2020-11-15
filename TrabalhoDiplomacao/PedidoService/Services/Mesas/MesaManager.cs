@@ -23,7 +23,8 @@ namespace PedidoService.Services.Mesas
 
         public Mesa BuscaPorId(int id)
         {
-            var mesa = BuscaTodos().FirstOrDefault(x => x.Id == id);
+            var mesa = _dbContext.Mesas.Where(x => x.Id == id)
+                                       .FirstOrDefault();
             return mesa;
         }
     }
