@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PedidoService.Database.Entities;
 using PedidoService.Models;
+using PedidoService.Models.Produtos;
 using PedidoService.Services.Produtos;
 using UsuarioService.Database.Entities;
 
@@ -33,9 +34,18 @@ namespace PedidoService.Controllers
 
         [Authorize(Roles = Roles.Admin)]
         [HttpGet]
-        public IEnumerable<Produto> GetAll()
+        public IActionResult GetAll()
         {
-            return db.Produtos.ToList();
+            var produtos = _produtoManager.BuscaTodos();
+
+            if (produtos.Count() > 0)
+            {
+                var produtoDTO = _mapper.Map<List<BuscaProdutoBindingModel>>(produtos);
+
+                return Ok(produtoDTO);
+            }
+
+            return NotFound(new { message = "Não existe nenhum Produto cadastrado." });
         }
 
         [Authorize(Roles = Roles.Admin)]
@@ -47,17 +57,19 @@ namespace PedidoService.Controllers
             if (produto == null)
                 return BadRequest(new { message = "Produto não foi encontrado!" });
 
-            var produtoDTO = _mapper.Map<ProdutoDTO>(produto);
+            var produtoDTO = _mapper.Map<BuscaProdutoBindingModel>(produto);
 
             return Ok(produtoDTO);
         }
 
         [HttpPost]
-        public IActionResult Post([FromBody] Produto model)
+        public IActionResult Post([FromBody] CriaProdutoBindingModel model)
         {
             try
             {
-                db.Produtos.Add(model);
+                var produtoDTO = _mapper.Map<Produto>(model);
+
+                db.Produtos.Add(produtoDTO);
                 db.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }
