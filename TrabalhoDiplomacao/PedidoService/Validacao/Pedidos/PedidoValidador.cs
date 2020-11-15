@@ -1,5 +1,6 @@
 ﻿using PedidoService.Database.Entities;
 using PedidoService.Services.Mesas;
+using PedidoService.Services.Produtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,15 @@ namespace PedidoService.Validacao
     {
         private IUsuarioManager _usuarioManager;
         private IMesaManager _mesaManager;
+        private IProdutoManager _produtoManager;
 
         public PedidoValidador(IUsuarioManager usuarioManager,
-                               IMesaManager mesaManager)
+                               IMesaManager mesaManager,
+                               IProdutoManager produtoManager)
         {
             _usuarioManager = usuarioManager;
             _mesaManager = mesaManager;
+            _produtoManager = produtoManager;
         }
 
         public void ValidaRegrasDeNegocio(Pedido pedido)
@@ -40,6 +44,16 @@ namespace PedidoService.Validacao
             if (mesaNoDb == null)
             {
                 throw new Exception("A Mesa não foi encontrada.");
+            }
+
+            foreach (var produto in pedido.PedidoProdutos)
+            {
+                var produtoNoDb = _produtoManager.BuscaPorId(produto.ProdutoId);
+
+                if (produtoNoDb == null)
+                {
+                    throw new Exception("Produto não foi encontrado. (Id = " + produto.ProdutoId + ")");
+                }
             }
         }
     }
