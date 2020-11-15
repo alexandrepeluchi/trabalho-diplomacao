@@ -9,6 +9,6 @@ namespace PedidoService.Services.Produtos
     public interface IProdutoManager
     {
         Produto BuscaPorId(int id);
-        IEnumerable<Pedido> BuscaTodos();
+        IEnumerable<Produto> BuscaTodos();
     }
 }
