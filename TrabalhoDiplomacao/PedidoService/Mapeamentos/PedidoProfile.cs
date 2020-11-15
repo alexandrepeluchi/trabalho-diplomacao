@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using PedidoService.Database.Entities;
 using PedidoService.Models;
+using PedidoService.Models.Pedidos;
+using PedidoService.Models.Produtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +14,18 @@ namespace PedidoService.Mapeamentos
     {
         public PedidoProfile()
         {
-            CreateMap<Pedido, PedidoDTO>();
+            CreateMap<Pedido, BuscaPedidoBindingModel>();
+
+            CreateMap<CriaPedidoBindingModel, Pedido>()
+                .ForMember(p => p.PedidoProdutos, opt => opt.Ignore())
+                .AfterMap((model, pedido) =>
+                {
+                    foreach (var produto in model.Produtos)
+                    {
+                        pedido.PedidoProdutos.Add(new PedidoProduto(0, produto.Id));
+                    }
+                })
+                .ReverseMap();
         }
     }
 }
