@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PedidoService.Database.Entities;
 using PedidoService.Models;
+using PedidoService.Models.Pedidos;
 using PedidoService.Services;
 using PedidoService.Validacao;
 using UsuarioService.Database.Entities;
@@ -50,20 +51,22 @@ namespace PedidoService.Controllers
             if (pedido == null)
                 return BadRequest(new { message = "Pedido não foi encontrado!" });
 
-            var pedidoDTO = _mapper.Map<PedidoDTO>(pedido);
+            var pedidoDTO = _mapper.Map<BuscaPedidoBindingModel>(pedido);
 
             return Ok(pedidoDTO);
         }
 
         [Authorize(Roles = Roles.Admin)]
         [HttpPost]
-        public IActionResult Post([FromBody] Pedido model)
+        public IActionResult Post([FromBody] CriaPedidoBindingModel model)
         {
-            _pedidoValidador.ValidaRegrasDeNegocio(model);
+            var pedidoDTO = _mapper.Map<Pedido>(model);
+
+            _pedidoValidador.ValidaRegrasDeNegocio(pedidoDTO);
 
             try
             {
-                db.Pedidos.Add(model);
+                db.Pedidos.Add(pedidoDTO);
                 db.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }
