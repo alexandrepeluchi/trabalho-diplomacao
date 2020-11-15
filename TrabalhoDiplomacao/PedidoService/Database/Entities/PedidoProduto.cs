@@ -15,5 +15,13 @@ namespace PedidoService.Database.Entities
         public int ProdutoId { get; set; }
         [ForeignKey("ProdutoId")]
         public Produto Produto { get; set; }
+
+        public PedidoProduto() { }
+
+        public PedidoProduto(int pedidoId, int produtoId)
+        {
+            PedidoId = pedidoId;
+            ProdutoId = produtoId;
+        }
     }
 }
