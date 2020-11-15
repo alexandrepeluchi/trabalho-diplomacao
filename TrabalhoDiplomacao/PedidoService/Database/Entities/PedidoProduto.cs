@@ -9,7 +9,6 @@ namespace PedidoService.Database.Entities
     [Table("PedidosProdutos")]
     public class PedidoProduto
     {
-        public int Id { get; set; }
         public long PedidoId { get; set; }
         [ForeignKey("PedidoId")]
         public Pedido Pedido { get; set; }

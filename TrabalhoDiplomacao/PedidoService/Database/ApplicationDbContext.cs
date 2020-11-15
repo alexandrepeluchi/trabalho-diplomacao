@@ -95,6 +95,20 @@ namespace PedidoService.Database.Entities
                     Disponivel = true
                 }
             );
+
+            base.OnModelCreating(modelbuilder);
+
+            modelbuilder.Entity<PedidoProduto>().HasKey(x => new { x.PedidoId, x.ProdutoId });
+
+            modelbuilder.Entity<PedidoProduto>()
+                .HasOne(x => x.Pedido)
+                .WithMany(mx => mx.PedidoProdutos)
+                .HasForeignKey(x => x.PedidoId);
+
+            modelbuilder.Entity<PedidoProduto>()
+                .HasOne(x => x.Produto)
+                .WithMany(mx => mx.PedidoProdutos)
+                .HasForeignKey(x => x.ProdutoId);
         }
     }
 }

@@ -16,6 +16,6 @@ namespace PedidoService.Database.Entities
         public string Descricao { get; set; }
         public float Preco { get; set; }
         public string Codigo { get; set; }
-        public ICollection<PedidoProduto> PedidosProdutos { get; set; }
+        public ICollection<PedidoProduto> PedidoProdutos { get; set; }
     }
 }
