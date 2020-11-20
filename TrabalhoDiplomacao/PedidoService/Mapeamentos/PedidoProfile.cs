@@ -15,13 +15,29 @@ namespace PedidoService.Mapeamentos
         public PedidoProfile()
         {
             CreateMap<Pedido, BuscaPedidoBindingModel>()
+                .ForMember(p => p.Produtos, opt => opt.Ignore())
+                .AfterMap((model, pedido) =>
+                 {
+                     pedido.Produtos = new List<BuscaPorIdPedidoProdutoBindingModel>();
+
+                     foreach (var produtos in model.PedidoProdutos)
+                     {
+                         pedido.Produtos.Add(new BuscaPorIdPedidoProdutoBindingModel()
+                         {
+                             Id = produtos.ProdutoId
+                         });
+                     }
+                });
+
+            CreateMap<Pedido, PedidoBindingModel>()
+                .ForMember(p => p.Produtos, opt => opt.Ignore())
                 .AfterMap((model, pedido) =>
                 {
-                    pedido.Produtos = new List<BuscaPorIdPedidoProdutoBindingModel>();
+                    pedido.Produtos = new List<BuscaPedidoProdutoBindingModel>();
 
                     foreach (var produtos in model.PedidoProdutos)
                     {
-                        pedido.Produtos.Add(new BuscaPorIdPedidoProdutoBindingModel()
+                        pedido.Produtos.Add(new BuscaPedidoProdutoBindingModel()
                         {
                             Id = produtos.Produto.Id,
                             Nome = produtos.Produto.Nome,

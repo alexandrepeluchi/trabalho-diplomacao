@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using PedidoService.Database.Entities;
 using PedidoService.Models;
 using PedidoService.Models.Pedidos;
+using PedidoService.Models.Produtos;
 using PedidoService.Services;
 using PedidoService.Validacao;
 using UsuarioService.Database.Entities;
@@ -37,9 +38,18 @@ namespace PedidoService.Controllers
 
         [Authorize(Roles = Roles.Admin)]
         [HttpGet]
-        public IEnumerable<Pedido> GetAll()
+        public IActionResult GetAll()
         {
-            return db.Pedidos.ToList();
+            var pedidos = _pedidoManager.BuscaTodos();
+
+            if (pedidos.Count() > 0)
+            {
+                var pedidoDTO = _mapper.Map<List<BuscaPedidoBindingModel>>(pedidos);
+
+                return Ok(pedidoDTO);
+            }
+
+            return NotFound(new { message = "Não existe nenhum Pedido cadastrado." });
         }
 
         [Authorize(Roles = Roles.Admin)]
@@ -51,7 +61,7 @@ namespace PedidoService.Controllers
             if (pedido == null)
                 return BadRequest(new { message = "Pedido não foi encontrado!" });
 
-            var pedidoDTO = _mapper.Map<BuscaPedidoBindingModel>(pedido);
+            var pedidoDTO = _mapper.Map<PedidoBindingModel>(pedido);
 
             return Ok(pedidoDTO);
         }

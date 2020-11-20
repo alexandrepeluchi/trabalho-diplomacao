@@ -18,7 +18,9 @@ namespace PedidoService.Services
 
         public IEnumerable<Pedido> BuscaTodos()
         {
-            return _dbContext.Set<Pedido>().AsNoTracking();
+            var teste = _dbContext.Set<Pedido>().Include(x => x.PedidoProdutos)
+                                                .AsNoTracking();
+            return teste;
         }
 
         public Pedido BuscaPorId(int id)

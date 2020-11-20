@@ -13,8 +13,8 @@ namespace PedidoService.Mapeamentos
     {
         public ProdutoProfile()
         {
-            CreateMap<Produto, BuscaProdutoBindingModel>(); 
-            
+            CreateMap<Produto, BuscaProdutoBindingModel>();
+
             CreateMap<CriaProdutoBindingModel, Produto>();
         }
     }

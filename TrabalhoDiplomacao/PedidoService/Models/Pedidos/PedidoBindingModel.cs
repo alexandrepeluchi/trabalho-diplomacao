@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PedidoService.Models.Pedidos
+namespace PedidoService.Models
 {
-    public class BuscaPedidoBindingModel
+    public class PedidoBindingModel
     {
         public long Id { get; set; }
         public float Valor { get; set; }
@@ -14,11 +14,11 @@ namespace PedidoService.Models.Pedidos
         public DateTime DataPedido { get; set; }
         public int UsuarioId { get; set; }
         public int MesaId { get; set; }
-        public List<BuscaPorIdPedidoProdutoBindingModel> Produtos { get; set; }
+        public List<BuscaPedidoProdutoBindingModel> Produtos { get; set; }
 
-        public BuscaPedidoBindingModel()
+        public PedidoBindingModel()
         {
-            Produtos = new List<BuscaPorIdPedidoProdutoBindingModel>();
+            Produtos = new List<BuscaPedidoProdutoBindingModel>();
         }
     }
 }
