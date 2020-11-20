@@ -25,7 +25,7 @@ namespace PedidoService.Services
         {
             var pedido = _dbContext.Pedidos
                                     .Where(x => x.Id == id)
-                                    .Include(x => x.PedidoProdutos)
+                                    .Include(x => x.PedidoProdutos).ThenInclude(x => x.Produto)
                                     .FirstOrDefault();
             return pedido;
         }
