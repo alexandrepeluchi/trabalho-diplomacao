@@ -62,6 +62,7 @@ namespace PedidoService.Controllers
             return Ok(produtoDTO);
         }
 
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost]
         public IActionResult Post([FromBody] CriaProdutoBindingModel model)
         {
