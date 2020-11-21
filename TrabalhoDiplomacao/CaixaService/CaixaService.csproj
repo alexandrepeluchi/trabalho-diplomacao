@@ -4,5 +4,35 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Migrations\20201121200553_EntidadeCaixa.cs" />
+    <Compile Remove="Migrations\20201121200553_EntidadeCaixa.Designer.cs" />
+    <Compile Remove="Migrations\20201121200832_EntidadeCaixa.cs" />
+    <Compile Remove="Migrations\20201121200832_EntidadeCaixa.Designer.cs" />
+    <Compile Remove="Migrations\20201121201003_a.cs" />
+    <Compile Remove="Migrations\20201121201003_a.Designer.cs" />
+    <Compile Remove="Migrations\20201121201123_RelacaoComUsuario.cs" />
+    <Compile Remove="Migrations\20201121201123_RelacaoComUsuario.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PedidoService\PedidoService.csproj" />
+    <ProjectReference Include="..\UsuarioService\UsuarioService.csproj" />
+  </ItemGroup>
+
 
 </Project>
