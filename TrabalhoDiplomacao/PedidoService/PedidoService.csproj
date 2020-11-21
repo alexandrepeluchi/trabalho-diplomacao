@@ -11,13 +11,21 @@
     <Compile Remove="Migrations\20201102185718_AdicionandoPedidoESuasRelacoes.Designer.cs" />
     <Compile Remove="Migrations\20201102190757_AdicionandoPedidoESuasRelacoes.cs" />
     <Compile Remove="Migrations\20201102190757_AdicionandoPedidoESuasRelacoes.Designer.cs" />
+    <Compile Remove="Migrations\20201112214556_RelacaoDeProdutoComPedidos.cs" />
+    <Compile Remove="Migrations\20201112214556_RelacaoDeProdutoComPedidos.Designer.cs" />
+    <Compile Remove="Migrations\20201112214809_RelacaoDeProdutoComPedidos.cs" />
+    <Compile Remove="Migrations\20201112214809_RelacaoDeProdutoComPedidos.Designer.cs" />
+    <Compile Remove="Migrations\20201112215418_teste.cs" />
+    <Compile Remove="Migrations\20201112215418_teste.Designer.cs" />
+    <Compile Remove="Migrations\20201120032942_AdicionadoPreparo.cs" />
+    <Compile Remove="Migrations\20201120032942_AdicionadoPreparo.Designer.cs" />
+    <Compile Remove="Migrations\20201120033040_AdicionadoPreparo.cs" />
+    <Compile Remove="Migrations\20201120033040_AdicionadoPreparo.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.10" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.9" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.9">
       <PrivateAssets>all</PrivateAssets>

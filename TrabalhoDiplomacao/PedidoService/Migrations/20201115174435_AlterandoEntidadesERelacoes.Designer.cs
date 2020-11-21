@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PedidoService.Database.Entities;
 
 namespace PedidoService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201115174435_AlterandoEntidadesERelacoes")]
+    partial class AlterandoEntidadesERelacoes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +84,6 @@ namespace PedidoService.Migrations
                     b.Property<int>("MesaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreparoId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -97,8 +96,6 @@ namespace PedidoService.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("MesaId");
-
-                    b.HasIndex("PreparoId");
 
                     b.HasIndex("UsuarioId");
 
@@ -118,27 +115,6 @@ namespace PedidoService.Migrations
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("PedidosProdutos");
-                });
-
-            modelBuilder.Entity("PedidoService.Database.Entities.Preparo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataPreparo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Observacao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Preparos");
                 });
 
             modelBuilder.Entity("PedidoService.Database.Entities.Produto", b =>
@@ -273,7 +249,7 @@ namespace PedidoService.Migrations
                         new
                         {
                             Id = 1,
-                            DataRegistro = new DateTime(2020, 11, 20, 0, 37, 29, 993, DateTimeKind.Local).AddTicks(1833),
+                            DataRegistro = new DateTime(2020, 11, 15, 14, 44, 35, 543, DateTimeKind.Local).AddTicks(4590),
                             Nome = "Admin",
                             Password = "admin",
                             Proprietario = true,
@@ -289,12 +265,6 @@ namespace PedidoService.Migrations
                     b.HasOne("PedidoService.Database.Entities.Mesa", "Mesa")
                         .WithMany()
                         .HasForeignKey("MesaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PedidoService.Database.Entities.Preparo", "Preparo")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("PreparoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

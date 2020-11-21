@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PedidoService.Database.Entities;
 
 namespace PedidoService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201112214858_RelacaoDeProdutoComPedidos")]
+    partial class RelacaoDeProdutoComPedidos
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,9 +84,6 @@ namespace PedidoService.Migrations
                     b.Property<int>("MesaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("PreparoId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -98,8 +97,6 @@ namespace PedidoService.Migrations
 
                     b.HasIndex("MesaId");
 
-                    b.HasIndex("PreparoId");
-
                     b.HasIndex("UsuarioId");
 
                     b.ToTable("Pedidos");
@@ -107,38 +104,24 @@ namespace PedidoService.Migrations
 
             modelBuilder.Entity("PedidoService.Database.Entities.PedidoProduto", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
                     b.Property<long>("PedidoId")
                         .HasColumnType("bigint");
 
                     b.Property<int>("ProdutoId")
                         .HasColumnType("int");
 
-                    b.HasKey("PedidoId", "ProdutoId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("PedidoId");
 
                     b.HasIndex("ProdutoId");
 
                     b.ToTable("PedidosProdutos");
-                });
-
-            modelBuilder.Entity("PedidoService.Database.Entities.Preparo", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("DataPreparo")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Observacao")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Preparos");
                 });
 
             modelBuilder.Entity("PedidoService.Database.Entities.Produto", b =>
@@ -273,7 +256,7 @@ namespace PedidoService.Migrations
                         new
                         {
                             Id = 1,
-                            DataRegistro = new DateTime(2020, 11, 20, 0, 37, 29, 993, DateTimeKind.Local).AddTicks(1833),
+                            DataRegistro = new DateTime(2020, 11, 12, 18, 48, 58, 477, DateTimeKind.Local).AddTicks(824),
                             Nome = "Admin",
                             Password = "admin",
                             Proprietario = true,
@@ -292,12 +275,6 @@ namespace PedidoService.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PedidoService.Database.Entities.Preparo", "Preparo")
-                        .WithMany("Pedidos")
-                        .HasForeignKey("PreparoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("UsuarioService.Database.Entities.Usuario", "Usuario")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
@@ -308,13 +285,13 @@ namespace PedidoService.Migrations
             modelBuilder.Entity("PedidoService.Database.Entities.PedidoProduto", b =>
                 {
                     b.HasOne("PedidoService.Database.Entities.Pedido", "Pedido")
-                        .WithMany("PedidoProdutos")
+                        .WithMany()
                         .HasForeignKey("PedidoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PedidoService.Database.Entities.Produto", "Produto")
-                        .WithMany("PedidoProdutos")
+                        .WithMany()
                         .HasForeignKey("ProdutoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

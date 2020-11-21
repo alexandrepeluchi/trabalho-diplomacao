@@ -18,12 +18,16 @@ namespace PedidoService.Services
 
         public IEnumerable<Pedido> BuscaTodos()
         {
-            return _dbContext.Set<Pedido>().AsNoTracking();
+            return _dbContext.Set<Pedido>().Include(x => x.PedidoProdutos)
+                                           .AsNoTracking();
         }
 
         public Pedido BuscaPorId(int id)
         {
-            var pedido = BuscaTodos().FirstOrDefault(x => x.Id == id);
+            var pedido = _dbContext.Pedidos
+                                    .Where(x => x.Id == id)
+                                    .Include(x => x.PedidoProdutos).ThenInclude(x => x.Produto)
+                                    .FirstOrDefault();
             return pedido;
         }
     }

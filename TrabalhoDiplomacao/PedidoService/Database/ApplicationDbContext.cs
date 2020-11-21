@@ -11,6 +11,9 @@ namespace PedidoService.Database.Entities
     {
         public DbSet<Pedido> Pedidos { get; set; }
         public DbSet<Mesa> Mesas { get; set; }
+        public DbSet<Produto> Produtos { get; set; }
+        public DbSet<PedidoProduto> PedidosProdutos { get; set; }
+        public DbSet<Preparo> Preparos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -93,6 +96,20 @@ namespace PedidoService.Database.Entities
                     Disponivel = true
                 }
             );
+
+            base.OnModelCreating(modelbuilder);
+
+            modelbuilder.Entity<PedidoProduto>().HasKey(x => new { x.PedidoId, x.ProdutoId });
+
+            modelbuilder.Entity<PedidoProduto>()
+                .HasOne(x => x.Pedido)
+                .WithMany(mx => mx.PedidoProdutos)
+                .HasForeignKey(x => x.PedidoId);
+
+            modelbuilder.Entity<PedidoProduto>()
+                .HasOne(x => x.Produto)
+                .WithMany(mx => mx.PedidoProdutos)
+                .HasForeignKey(x => x.ProdutoId);
         }
     }
 }
