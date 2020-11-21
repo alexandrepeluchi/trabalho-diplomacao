@@ -18,13 +18,15 @@ namespace PedidoService.Services.Preparos
 
         public IEnumerable<Preparo> BuscaTodos()
         {
-           return _dbContext.Set<Preparo>().AsNoTracking();
+           return _dbContext.Set<Preparo>().Include(x => x.Pedidos)
+                                           .AsNoTracking();
         }
 
         public Preparo BuscaPorId(int id)
         {
             var preparo = _dbContext.Preparos
                                     .Where(x => x.Id == id)
+                                    .Include(x => x.Pedidos)
                                     .FirstOrDefault();
             return preparo;
         }

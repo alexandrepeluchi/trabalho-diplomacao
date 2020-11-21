@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PedidoService.Database.Entities;
+using PedidoService.Models.Preparos;
 using PedidoService.Services;
 using PedidoService.Services.Preparos;
 using UsuarioService.Database.Entities;
@@ -37,7 +38,9 @@ namespace PedidoService.Controllers
 
             if (preparos.Count() > 0)
             {
-                return Ok(preparos);
+                var preparoDTO = _mapper.Map<List<BuscaPreparoBindingModel>>(preparos);
+
+                return Ok(preparoDTO);
             }
 
             return NotFound(new { message = "Não existe nenhum Preparo cadastrado." });
@@ -52,16 +55,20 @@ namespace PedidoService.Controllers
             if (preparo == null)
                 return BadRequest(new { message = "Preparo não foi encontrado!" });
 
-            return Ok(preparo);
+            var preparoDTO = _mapper.Map<PreparoBindingModel>(preparo);
+
+            return Ok(preparoDTO);
         }
 
         [Authorize(Roles = Roles.Admin)]
         [HttpPost]
-        public IActionResult Post([FromBody] Preparo model)
+        public IActionResult Post([FromBody] CriaPreparoBindingModel model)
         {
+            var preparoDTO = _mapper.Map<Preparo>(model);
+
             try
             {
-                db.Preparos.Add(model);
+                db.Preparos.Add(preparoDTO);
                 db.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }
