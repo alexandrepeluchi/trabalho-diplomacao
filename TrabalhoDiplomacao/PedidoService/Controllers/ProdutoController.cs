@@ -21,7 +21,7 @@ namespace PedidoService.Controllers
     public class ProdutoController : ControllerBase
     {
         ApplicationDbContext db;
-        private IProdutoManager _produtoManager;
+        private readonly IProdutoManager _produtoManager;
         private readonly IMapper _mapper;
 
         public ProdutoController(IProdutoManager produtoManager,
