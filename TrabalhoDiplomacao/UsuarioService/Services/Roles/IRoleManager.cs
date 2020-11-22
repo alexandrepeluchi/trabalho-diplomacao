@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using UsuarioService.Database.Entities;
 
-namespace UsuarioService.Uteis
+namespace UsuarioService.Services.Roles
 {
-    public interface IUsuarioServico
+    public interface IRoleManager
     {
-        Usuario BuscaPorId(int id);
-        IQueryable<Usuario> BuscaTodos();
+        Role BuscaPorId(int id);
+        IEnumerable<Role> BuscaTodos();
     }
 }

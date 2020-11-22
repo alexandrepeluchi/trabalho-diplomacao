@@ -8,8 +8,12 @@ namespace UsuarioService.Services
 {
     public interface IUsuarioManager
     {
+        Usuario Atualiza(Usuario usuario);
         Usuario Authenticate(string username, string password);
+        bool BuscaPorCPF(string cpf);
         Usuario BuscaPorId(int id);
+        bool BuscaPorUsername(string username);
+        bool Exclui(Usuario usuario);
         IEnumerable<Usuario> GetAll();
     }
 }

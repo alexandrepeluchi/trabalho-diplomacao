@@ -21,5 +21,12 @@ namespace UsuarioService.Uteis
         {
             return _dbContext.Set<Usuario>().AsNoTracking();
         }
+
+        public Usuario BuscaPorId(int id)
+        {
+            var user = _dbContext.Usuarios.Where(x => x.Id == id)
+                                          .FirstOrDefault();
+            return user;
+        }
     }
 }

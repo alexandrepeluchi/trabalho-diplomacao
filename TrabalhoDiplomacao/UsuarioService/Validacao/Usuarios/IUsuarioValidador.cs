@@ -4,11 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using UsuarioService.Database.Entities;
 
-namespace UsuarioService.Uteis
+namespace UsuarioService.Validacao.Usuarios
 {
-    public interface IUsuarioServico
+    public interface IUsuarioValidador
     {
-        Usuario BuscaPorId(int id);
-        IQueryable<Usuario> BuscaTodos();
+        void ValidaRegrasDeNegocio(Usuario usuario);
     }
 }

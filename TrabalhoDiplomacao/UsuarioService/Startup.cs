@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,7 +15,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using UsuarioService.Helpers;
 using UsuarioService.Services;
+using UsuarioService.Services.Roles;
 using UsuarioService.Uteis;
+using UsuarioService.Validacao.CPF;
+using UsuarioService.Validacao.Usuarios;
 
 namespace UsuarioService
 {
@@ -58,9 +62,19 @@ namespace UsuarioService
                 };
             });
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            services.AddAutoMapper(typeof(Startup));
+
             // configure DI for application services
             services.AddScoped<IUsuarioManager, UsuarioManager>();
             services.AddScoped<IUsuarioServico, UsuarioServico>();
+            services.AddScoped<IUsuarioValidador, UsuarioValidador>();
+            services.AddScoped<IRoleManager, RoleManager>();
+            services.AddScoped<ICpfValidador, CpfValidador>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
