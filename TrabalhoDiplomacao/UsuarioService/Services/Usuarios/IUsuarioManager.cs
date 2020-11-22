@@ -13,6 +13,7 @@ namespace UsuarioService.Services
         bool BuscaPorCPF(string cpf);
         Usuario BuscaPorId(int id);
         bool BuscaPorUsername(string username);
+        bool Exclui(Usuario usuario);
         IEnumerable<Usuario> GetAll();
     }
 }

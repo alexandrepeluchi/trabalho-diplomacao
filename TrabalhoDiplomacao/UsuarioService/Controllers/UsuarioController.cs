@@ -121,5 +121,24 @@ namespace UsuarioService.Controllers
 
             return Ok(usuarioAtualizado);
         }
+
+        [Authorize(Roles = Roles.AdminOuGerente)]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var usuario = _usuarioManager.BuscaPorId(id);
+
+            if (usuario == null)
+                return BadRequest(new { message = "Usuário não foi encontrado!" });
+
+            var foiExcluido = _usuarioManager.Exclui(usuario);
+
+            if (!foiExcluido)
+            {
+                return NotFound("Erro ao excluir. Usuário não encontrado.");
+            }
+            
+            return Ok("Usuário excluído com sucesso.");
+        }
     }
 }

@@ -115,5 +115,20 @@ namespace UsuarioService.Services
 
             return usuario;
         }
+
+        public bool Exclui(Usuario usuario)
+        {
+            var usuarioNoDb = _usuarioServico.BuscaPorId(usuario.Id);
+
+            if (usuarioNoDb == null)
+            {
+                throw new Exception("O Usuário não foi encontrado.");
+            }
+
+            _dbContext.Usuarios.Remove(usuario);
+            _dbContext.SaveChanges();
+
+            return true;
+        }
     }
 }
