@@ -50,7 +50,7 @@ namespace PedidoService.Validacao
                 throw new Exception("A Mesa não foi encontrada.");
             }
 
-            var preparoNoDb = _mesaManager.BuscaPorId(pedido.PreparoId);
+            var preparoNoDb = _preparoManager.BuscaPorId(pedido.PreparoId);
 
             if (preparoNoDb == null)
             {
