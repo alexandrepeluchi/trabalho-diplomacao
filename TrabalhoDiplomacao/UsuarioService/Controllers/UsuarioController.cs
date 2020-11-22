@@ -37,7 +37,6 @@ namespace UsuarioService.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = Roles.Admin)]
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody] AuthenticateModel model)
@@ -50,7 +49,7 @@ namespace UsuarioService.Controllers
             return Ok(user);
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -66,7 +65,7 @@ namespace UsuarioService.Controllers
             return NotFound(new { message = "Não existe nenhum Caixa cadastrado." });
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -80,7 +79,7 @@ namespace UsuarioService.Controllers
             return Ok(usuarioDTO);
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpPost]
         public IActionResult Post([FromBody] CriaUsuarioBindingModel model)
         {

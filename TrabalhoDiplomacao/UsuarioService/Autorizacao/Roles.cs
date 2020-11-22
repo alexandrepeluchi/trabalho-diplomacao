@@ -11,5 +11,8 @@ namespace UsuarioService.Database.Entities
         public const string Gerente = "Gerente";
         public const string Atendente = "Atendente";
         public const string Garcom = "Garçom";
+
+        // Administrador e Gerente
+        public const string AdminOuGerente = Admin + "," + Gerente;
     }
 }
