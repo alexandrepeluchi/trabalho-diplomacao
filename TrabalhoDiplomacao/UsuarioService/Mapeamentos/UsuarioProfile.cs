@@ -16,8 +16,9 @@ namespace UsuarioService.Mapeamentos
 
             CreateMap<CriaUsuarioBindingModel, Usuario>();
 
-            CreateMap<UsuarioBindingModel, Usuario>().ReverseMap();
+            CreateMap<AtualizaUsuarioBindingModel, Usuario>();
 
+            CreateMap<UsuarioBindingModel, Usuario>().ReverseMap();
         }
     }
 }

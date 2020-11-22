@@ -8,6 +8,7 @@ namespace UsuarioService.Uteis
 {
     public interface IUsuarioServico
     {
+        Usuario BuscaPorId(int id);
         IQueryable<Usuario> BuscaTodos();
     }
 }

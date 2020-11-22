@@ -65,9 +65,55 @@ namespace UsuarioService.Services
 
         public Usuario BuscaPorId(int id)
         {
-            var user = _dbContext.Usuarios.Where(x => x.Id == id)
+            var user = _dbContext.Usuarios.Where(x => x.Id == id).AsNoTracking()
                                           .FirstOrDefault();
             return user.WithoutPassword();
+        }
+
+        public bool BuscaPorUsername(string username)
+        {
+            var user = _dbContext.Usuarios.Where(x => x.Username == username)
+                                          .FirstOrDefault();
+
+            if (user != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool BuscaPorCPF(string cpf)
+        {
+            var user = _dbContext.Usuarios.Where(x => x.CPF == cpf)
+                                          .FirstOrDefault();
+
+            if (user != null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public Usuario Atualiza(Usuario usuario)
+        {
+            var usuarioNoDb = _usuarioServico.BuscaPorId(usuario.Id);
+
+            if (usuarioNoDb == null)
+            {
+                throw new Exception("O Usuário não foi encontrado.");
+            }
+
+            if (usuario.Password == null)
+            {
+                usuario.Password = usuarioNoDb.Password;
+            }
+
+            _dbContext.Usuarios.Update(usuario);
+            _dbContext.SaveChanges();
+
+            return usuario;
         }
     }
 }

@@ -22,16 +22,16 @@ namespace UsuarioService.Controllers
     [ApiController]
     public class UsuarioController : ControllerBase
     {
-        ApplicationDbContext db;
-        private IUsuarioManager _usuarioManager;
-        private IUsuarioValidador _usuarioValidador;
+        ApplicationDbContext _dbContext;
+        private readonly IUsuarioManager _usuarioManager;
+        private readonly IUsuarioValidador _usuarioValidador;
         private readonly IMapper _mapper;
 
         public UsuarioController(IUsuarioManager usuarioManager,
                                  IUsuarioValidador usuarioValidador,
                                  IMapper mapper)
         {
-            db = new ApplicationDbContext();
+            _dbContext = new ApplicationDbContext();
             _usuarioManager = usuarioManager;
             _usuarioValidador = usuarioValidador;
             _mapper = mapper;
@@ -89,14 +89,37 @@ namespace UsuarioService.Controllers
 
             try
             {
-                db.Usuarios.Add(usuarioDTO);
-                db.SaveChanges();
+                _dbContext.Usuarios.Add(usuarioDTO);
+                _dbContext.SaveChanges();
                 return StatusCode(StatusCodes.Status201Created, model);
             }
             catch (Exception ex)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, ex);
             }
+        }
+
+        [Authorize(Roles = Roles.AdminOuGerente)]
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] AtualizaUsuarioBindingModel model)
+        {
+            var usuario = _usuarioManager.BuscaPorId(id);
+
+            if (usuario == null)
+                return BadRequest(new { message = "Usuário não foi encontrado!" });
+
+            var usuarioDTO = _mapper.Map<Usuario>(model);
+
+            _usuarioValidador.ValidaRegrasDeNegocio(usuarioDTO);
+
+            var usuarioAtualizado = _usuarioManager.Atualiza(usuarioDTO);
+
+            if (usuarioAtualizado == null)
+            {
+                return NotFound("Usuário não encontrado.");
+            }
+
+            return Ok(usuarioAtualizado);
         }
     }
 }

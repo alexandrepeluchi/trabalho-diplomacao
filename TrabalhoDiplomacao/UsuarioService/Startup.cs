@@ -17,6 +17,7 @@ using UsuarioService.Helpers;
 using UsuarioService.Services;
 using UsuarioService.Services.Roles;
 using UsuarioService.Uteis;
+using UsuarioService.Validacao.CPF;
 using UsuarioService.Validacao.Usuarios;
 
 namespace UsuarioService
@@ -73,6 +74,7 @@ namespace UsuarioService
             services.AddScoped<IUsuarioServico, UsuarioServico>();
             services.AddScoped<IUsuarioValidador, UsuarioValidador>();
             services.AddScoped<IRoleManager, RoleManager>();
+            services.AddScoped<ICpfValidador, CpfValidador>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
