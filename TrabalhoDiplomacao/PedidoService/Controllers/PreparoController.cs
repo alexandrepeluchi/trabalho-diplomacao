@@ -30,7 +30,7 @@ namespace PedidoService.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminGerenteOuAtendente)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -46,7 +46,7 @@ namespace PedidoService.Controllers
             return NotFound(new { message = "Não existe nenhum Preparo cadastrado." });
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminGerenteOuAtendente)]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -60,7 +60,7 @@ namespace PedidoService.Controllers
             return Ok(preparoDTO);
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminGerenteOuAtendente)]
         [HttpPost]
         public IActionResult Post([FromBody] CriaPreparoBindingModel model)
         {
@@ -78,16 +78,44 @@ namespace PedidoService.Controllers
             }
         }
 
-        // PUT api/<PreparoController>/5
+        [Authorize(Roles = Roles.AdminGerenteOuAtendente)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] AtualizaPreparoBindingModel model)
         {
+            var preparo = _preparoManager.BuscaPorId(id);
+
+            if (preparo == null)
+                return BadRequest(new { message = "Preparo não foi encontrado!" });
+
+            var preparoDTO = _mapper.Map<Preparo>(model);
+
+            var preparoAtualizado = _preparoManager.Atualiza(preparoDTO);
+
+            if (preparoAtualizado == null)
+            {
+                return NotFound("Preparo não foi encontrado!");
+            }
+
+            return Ok(preparoAtualizado);
         }
 
-        // DELETE api/<PreparoController>/5
+        [Authorize(Roles = Roles.AdminGerenteOuAtendente)]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var preparo = _preparoManager.BuscaPorId(id);
+
+            if (preparo == null)
+                return BadRequest(new { message = "Preparo não foi encontrado!" });
+
+            var foiExcluido = _preparoManager.Exclui(preparo);
+
+            if (!foiExcluido)
+            {
+                return NotFound("Erro ao excluir. Preparo não encontrado.");
+            }
+
+            return Ok("Preparo excluído com sucesso.");
         }
     }
 }

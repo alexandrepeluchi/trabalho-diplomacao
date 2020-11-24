@@ -32,7 +32,7 @@ namespace PedidoService.Controllers
             _mapper = mapper;
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -48,7 +48,7 @@ namespace PedidoService.Controllers
             return NotFound(new { message = "Não existe nenhum Produto cadastrado." });
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -62,7 +62,7 @@ namespace PedidoService.Controllers
             return Ok(produtoDTO);
         }
 
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpPost]
         public IActionResult Post([FromBody] CriaProdutoBindingModel model)
         {
@@ -80,14 +80,44 @@ namespace PedidoService.Controllers
             }
         }
 
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] AtualizaProdutoBindingModel model)
         {
+            var produto = _produtoManager.BuscaPorId(id);
+
+            if (produto == null)
+                return BadRequest(new { message = "Produto não foi encontrado!" });
+
+            var produtoDTO = _mapper.Map<Produto>(model);
+
+            var produtoAtualizado = _produtoManager.Atualiza(produtoDTO);
+
+            if (produtoAtualizado == null)
+            {
+                return NotFound("Produto não foi encontrado!");
+            }
+
+            return Ok(produtoAtualizado);
         }
 
+        [Authorize(Roles = Roles.AdminOuGerente)]
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            var produto = _produtoManager.BuscaPorId(id);
+
+            if (produto == null)
+                return BadRequest(new { message = "Produto não foi encontrado!" });
+
+            var foiExcluido = _produtoManager.Exclui(produto);
+
+            if (!foiExcluido)
+            {
+                return NotFound("Erro ao excluir. Produto não encontrado.");
+            }
+
+            return Ok("Produto excluído com sucesso.");
         }
     }
 }

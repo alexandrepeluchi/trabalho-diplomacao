@@ -26,8 +26,25 @@ namespace PedidoService.Services.Produtos
             var produto = _dbContext.Produtos
                                    .Where(x => x.Id == id)
                                    .Include(x => x.PedidoProdutos)
+                                   .AsNoTracking()
                                    .FirstOrDefault();
             return produto;
+        }
+
+        public Produto Atualiza(Produto produto)
+        {
+            _dbContext.Produtos.Update(produto);
+            _dbContext.SaveChanges();
+
+            return produto;
+        }
+
+        public bool Exclui(Produto produto)
+        {
+            _dbContext.Produtos.Remove(produto);
+            _dbContext.SaveChanges();
+
+            return true;
         }
     }
 }

@@ -8,7 +8,9 @@ namespace PedidoService.Services.Produtos
 {
     public interface IProdutoManager
     {
+        Produto Atualiza(Produto produto);
         Produto BuscaPorId(int id);
         IEnumerable<Produto> BuscaTodos();
+        bool Exclui(Produto produto);
     }
 }
