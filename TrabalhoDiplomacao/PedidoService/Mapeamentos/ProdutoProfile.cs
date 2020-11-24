@@ -16,6 +16,8 @@ namespace PedidoService.Mapeamentos
             CreateMap<Produto, BuscaProdutoBindingModel>();
 
             CreateMap<CriaProdutoBindingModel, Produto>();
+
+            CreateMap<AtualizaProdutoBindingModel, Produto>();
         }
     }
 }
