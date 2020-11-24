@@ -49,6 +49,9 @@ namespace PedidoService.Mapeamentos
                 });
 
             CreateMap<CriaPreparoBindingModel, Preparo>();
+
+            CreateMap<AtualizaPreparoBindingModel, Preparo>();
+
         }
     }
 }

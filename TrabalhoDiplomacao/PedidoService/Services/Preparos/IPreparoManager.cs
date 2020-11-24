@@ -8,7 +8,9 @@ namespace PedidoService.Services.Preparos
 {
     public interface IPreparoManager
     {
+        Preparo Atualiza(Preparo preparo);
         Preparo BuscaPorId(int id);
         IEnumerable<Preparo> BuscaTodos();
+        bool Exclui(Preparo preparo);
     }
 }
