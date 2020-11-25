@@ -1,6 +1,18 @@
 {
   "Routes": [
     {
+      "DownstreamPathTemplate": "/api/usuario/authenticate",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5010"
+        }
+      ],
+      "UpstreamPathTemplate": "/usuario/authenticate",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
       "DownstreamPathTemplate": "/api/usuario",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -22,7 +34,7 @@
         }
       ],
       "UpstreamPathTemplate": "/usuario/{id}",
-      "UpstreamHttpMethod": [ "GET" ]
+      "UpstreamHttpMethod": [ "GET", "PUT", "DELETE" ]
     }
   ]
 }
